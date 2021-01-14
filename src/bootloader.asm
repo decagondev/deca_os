@@ -1,4 +1,8 @@
-; print Loading DecaOS... to the screen
+; print Loading DecaOS... to the screen (using function select)
+; the value we load in to ah will be the specific function
+; in our case it is the write char function 0x0e
+; the value we pass to al will be the char we want to write
+; and 0x10 is the call to the write biso subroutine / interrupt
 
 ; L
 mov ah, 0x0e ; move write interrupt to high area of ax

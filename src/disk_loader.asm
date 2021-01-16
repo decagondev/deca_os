@@ -25,7 +25,7 @@ DiskReadErrorStr:
     db 'Failed to read disk', 0x0a, 0x0d, 0
 
 DiskReadOKStr:
-    db 'Disk Load working!', 0x0a, 0x0d, 0
+    db 'Stage 2', 0x0a, 0x0d, 0
 
 DiskReadFailed:
     mov bx, DiskReadErrorStr
@@ -36,5 +36,3 @@ DiskReadFailed:
 DiskReadOK:
     mov bx, DiskReadOKStr
     call PrintMsg
-    
-    jmp $

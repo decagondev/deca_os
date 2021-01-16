@@ -12,4 +12,4 @@ PrintMsg:
     ret ; return from the function
 
 MessageText:
-    db 'Loading DecaOS...', 0x0a, 0x0d, 0
+    db 'Booting DecaOS...', 0x0a, 0x0d, 0

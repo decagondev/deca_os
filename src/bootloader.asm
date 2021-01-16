@@ -118,7 +118,8 @@ call PrintMsg
 
 call ReadDisk
 
-jmp $ ; infinite loop
+; jmp $ ; infinite loop
+jmp PROG_SPACE ; jump to the kernel entry point
 
 ; pull in the function from an external file
 %include 'src/loading_msg.asm'

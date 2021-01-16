@@ -1,38 +1,31 @@
-PROG_SPACE equ 0x7e00 ; 512 bytes after the boot loader
 
+PROG_SPACE equ 0x8000 ; set a constand ref to program space
+
+; read disk function
 ReadDisk:
-    mov ah, 0x02 ; set the function to read disk
-    mov bx, PROG_SPACE ; load in the pointer to the entry point of this .text
-    mov al, 4 ; define how many sectors to read 4 sectors
-    mov dl, [BOOT_DISK]
-    mov ch, 0x00 ; heads and cylinders
-    mov dh, 0x00
-    mov cl, 0x02 ; start reading at the second sector (the sector after the boot loader)
 
-    int 0x13 ; read disk interupt
+	mov ah, 0x02 ; set the bios function for disk read
+	mov bx, PROG_SPACE ; set the base to start at program space
+	mov al, 32 ; read 32 sectors
+	mov dl, [BOOT_DISK] ; set which disk to read from
+	mov ch, 0x00
+	mov dh, 0x00
+	mov cl, 0x02
 
-    ; lets check for read errors
-    jc DiskReadFailed ; if the carry flag is set then jump to the faliur notice
+	int 0x13 ; call the bios routine
 
-    ; if it does not fail print an ok message
-    jmp DiskReadOK
-    ret
+	jc DiskReadFailed ; if this fails jump to a faliur message
+
+	ret ; return to caller
 
 BOOT_DISK:
-    db 0 ; uninitialized data
+	db 0 ; uninitialized data
 
-DiskReadErrorStr:
-    db 'Failed to read disk', 0x0a, 0x0d, 0
-
-DiskReadOKStr:
-    db 'Stage 2', 0x0a, 0x0d, 0
+DiskReadErrorString:
+	db 'Disk Read Failed',0
 
 DiskReadFailed:
-    mov bx, DiskReadErrorStr
-    call PrintMsg
-    
-    jmp $
+	mov bx, DiskReadErrorString
+	call PrintString
 
-DiskReadOK:
-    mov bx, DiskReadOKStr
-    call PrintMsg
+	jmp $ ; infinite loop on faliure

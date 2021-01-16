@@ -106,6 +106,8 @@
 ;set the origin of the entry of the program
 [org 0x7c00]
 
+mov [BOOT_DISK], dl
+
 mov bp, 0x7c00
 mov sp, bp
 
@@ -114,10 +116,13 @@ mov bx, MessageText
 ; call our printing message
 call PrintMsg
 
+call ReadDisk
+
 jmp $ ; infinite loop
 
 ; pull in the function from an external file
 %include 'src/loading_msg.asm'
+%include 'src/disk_loader.asm'
 
 times 510-($-$$) db 0 ; padding for the bootloader
 

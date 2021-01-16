@@ -14,3 +14,9 @@ The *Operating System* will consist of a simple _bootloader_ and _kernel_ just t
 ## Structure
 - src (to keep the source files)
 - impl (to store the implementation of the os)
+
+## Methodology
+- setup a simple 16 bit bootloader / bootsector
+- get some characters on the screen (using BIOS calls)
+- load data from the disk (raw read with BIOS calls)
+- Jump in to protected mode
